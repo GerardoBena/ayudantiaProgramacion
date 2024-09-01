@@ -1,0 +1,6 @@
+int mult_rusa(int multiplicador, int multiplicando){
+    printf("Multiplicador: %d, Multiplicando: %d\n",multiplicador,multiplicando);
+    if(multiplicador==1) return multiplicando;
+    if(multiplicador%2==0) return mult_rusa(multiplicador/2,multiplicando*2);
+    return multiplicando + mult_rusa(multiplicador/2,multiplicando*2);
+}
