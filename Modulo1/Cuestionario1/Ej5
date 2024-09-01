@@ -1,0 +1,64 @@
+#include <stdio.h>
+
+int main(){
+    int dinero, opcion, resto=0;
+    
+    scanf("%d %d",&dinero, &opcion);
+    
+    switch(opcion){
+        case 1:{
+            resto = 450 - dinero;
+            if(resto<0){
+                resto = resto * -1;
+                printf("Su café EXPRESSO a $450 está listo, su vuelto es de $%d\n",resto);
+                printf("Gracias por su compra.");
+            }else{
+                if(resto==0){
+                    printf("Su café EXPRESSO a $450 está listo\n");
+                    printf("Gracias por su compra.");
+                }else{
+                    printf("Su café EXPRESSO a $450 está casi listo, solo faltan $%d",resto);
+                }
+            }
+            
+            break;
+        }
+        case 2:{
+            resto = 630 - dinero;
+            if(resto<0){
+                resto = resto * -1;
+                printf("Su café CAPUCHINO a $630 está listo, su vuelto es de $%d\n",resto);
+                printf("Gracias por su compra.");
+            }else{
+                if(resto==0){
+                    printf("Su café CAPUCHINO a $630 está listo\n");
+                    printf("Gracias por su compra.");
+                }else{
+                    printf("Su café CAPUCHINO a $630 está casi listo, solo faltan $%d",resto);
+                }
+            }
+            break;
+        }
+        case 3:{
+            resto = 780 - dinero;
+            if(resto<0){
+                resto = resto * -1;
+                printf("Su café MOCA a $780 está listo, su vuelto es de $%d\n",resto);
+                printf("Gracias por su compra.");
+            }else{
+                if(resto==0){
+                    printf("Su café MOCA a $780 está listo\n");
+                    printf("Gracias por su compra.");
+                }else{
+                    printf("Su café MOCA a $780 está casi listo, solo faltan $%d",resto);
+                }
+            }
+            break;
+        }
+        default:{
+            printf("Opción no valida.");
+            break;
+        }
+    }
+    return 0;
+}
