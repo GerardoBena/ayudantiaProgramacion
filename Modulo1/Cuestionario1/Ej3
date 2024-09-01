@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int main(){
+    int gramos, zona, montoFinal=0, gramosAdicionales=0;
+    
+    scanf("%d %d", &gramos, &zona);
+    
+    montoFinal = 700;
+    
+    if(gramos>500){
+        gramosAdicionales= gramos-500;
+        switch(zona){
+            case 1:{
+                montoFinal = montoFinal + gramosAdicionales * 2;
+                break;
+            }
+            case 2:{
+                montoFinal = montoFinal + gramosAdicionales * 3;
+                break;
+            }
+            case 3:{
+                montoFinal = montoFinal + gramosAdicionales * 5;
+                if( gramosAdicionales/500 > 0){
+                    montoFinal = montoFinal + (gramosAdicionales/500) * 50;
+                }
+                break;
+            }
+            case 4:{
+                montoFinal =  montoFinal + 1000 + gramosAdicionales * 6;
+                if( gramosAdicionales/400 > 0){
+                    montoFinal = montoFinal + (gramosAdicionales/400) * 60;
+                }
+                break;
+            }
+            default:{
+                printf("ZONA NO VALIDA");
+            }
+        }
+    }
+    else{
+        if(zona==4) montoFinal = montoFinal + 1000;
+    }
+    
+    
+    
+    printf("Monto a pagar por encomienda a zona %d es $%d", zona, montoFinal);
+    
+    return 0;
+}
