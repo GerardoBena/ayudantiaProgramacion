@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <math.h>
+
+int calcularAltura(int fichas,int *altura) {
+    int doble = 2 * fichas;
+    int niveles=0;
+    int iteraciones=0;
+
+    for (niveles = (int)trunc(sqrt(doble)); niveles >= 1; niveles--) {
+        if ((doble - niveles * (niveles - 1)) % (2 * niveles) == 0) {
+            *altura = niveles;
+            return iteraciones;
+        }
+        iteraciones++;
+    }
+    return 0; 
+}
+
+void descomponerNumeroyMostrarPiramide(int fichas, int altura) {
+    if(fichas==1){
+        printf("El piso inferior & superior de la pirámide tiene 1 ficha\n");
+        printf("\nDIBUJO PIRÁMIDE\n");
+        printf("=");
+        return;
+    }
+    
+    int sumaNMenor = altura * (altura - 1) / 2; 
+    int a;
+    
+    if ((fichas - sumaNMenor) % altura == 0) {
+        a = (fichas - sumaNMenor) / altura;
+        
+        if (a > 0) {
+            int menor = a;            
+            int mayor = a + altura - 1; 
+            if(menor==mayor){
+                printf("El piso inferior & superior de la pirámide tiene %d fichas\n",menor);
+            }else if(menor==1){
+                printf("El piso superior de la pirámide tiene 1 ficha\n");
+                printf("El piso inferior de la pirámide tiene %d fichas\n",mayor);
+            }
+            else{
+                printf("El piso superior de la pirámide tiene %d fichas\n",menor);
+                printf("El piso inferior de la pirámide tiene %d fichas\n",mayor);
+            }
+            printf("\nDIBUJO PIRÁMIDE\n");
+            for (int i = 0; i < altura; i++) {
+                
+                for (int j = 0; j < (altura - i - 1); j++) {
+                    printf(" ");
+                }
+                
+                for (int j = 0; j < a + i; j++) {
+                    printf("= ");
+                }
+                printf("\n");
+            }
+        } else {
+            printf("No es posible descomponer %d en %d números consecutivos.\n", fichas, altura);
+        }
+    } else {
+        printf("No es posible descomponer %d en %d números consecutivos.\n", fichas, altura);
+    }
+    return;
+}
+
+int main() {
+    int fichas, altura=0;
+    scanf("%d", &fichas);
+
+    int esTruncada = calcularAltura(fichas,&altura);
+    
+    if(esTruncada!=0){
+        printf("La altura de la pirámide TRUNCADA más alta que se puede construir con %d piezas es %d\n", 
+           fichas, altura);
+    }
+    else{
+        printf("La altura de la pirámide NO TRUNCADA más alta que se puede construir con %d piezas es %d\n", 
+           fichas, altura);
+    }
+
+    descomponerNumeroyMostrarPiramide(fichas, altura);
+    return 0;
+}
