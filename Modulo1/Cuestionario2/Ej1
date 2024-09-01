@@ -1,0 +1,45 @@
+#include <stdio.h>
+
+int main(){
+    int a, b, c, nuevoA=0, nuevoB=0, nuevoC=0, multiplicador=1, aux=0, digito;
+    
+    scanf("%d",&a);
+    scanf("%d",&b);
+    
+    c = a + b;
+    
+    aux=a;
+    while(aux>0){
+        digito = aux%10;
+        if(digito!=0){
+            nuevoA = nuevoA + (digito * multiplicador);//nuevoA+=digito*multiplicador
+            multiplicador = multiplicador * 10; //multiplicador*=10
+        }
+        aux = aux / 10;
+    }
+    
+    multiplicador=1;
+    aux=b;
+    while(aux>0){
+        digito = aux%10;
+        if(digito!=0){
+            nuevoB = nuevoB + (digito * multiplicador);//nuevoB+=digito*multiplicador
+            multiplicador = multiplicador * 10; //multiplicador*=10
+        }
+        aux = aux / 10;
+    }
+    
+    multiplicador=1;
+    aux=c;
+    while(aux>0){
+        digito = aux%10;
+        if(digito!=0){
+            nuevoC = nuevoC + (digito * multiplicador);//nuevoC+=digito*multiplicador
+            multiplicador = multiplicador * 10; //multiplicador*=10
+        }
+        aux = aux / 10;
+    }
+    
+    if((nuevoA+nuevoB)==nuevoC) printf("SI");
+    else printf("NO");
+}
