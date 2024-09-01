@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <math.h>
+
+int main()
+{
+    int montoInicial, periodo;
+    float interes, montoActualizado=0, ganancia=0;
+    
+    scanf("%d %d %f",&montoInicial, &periodo, &interes);
+    
+    montoActualizado = montoInicial * pow(( 1 + (interes / 100)),periodo);
+    ganancia = montoActualizado - montoInicial;
+    
+    printf("Monto inicial depositado en pesos $%d\n",montoInicial);
+    printf("Monto actualizado = $%.2f pesos \n",montoActualizado);
+    printf("Ganancia obtenida = $%.2f pesos",ganancia);
+    
+    return 0;
+}
