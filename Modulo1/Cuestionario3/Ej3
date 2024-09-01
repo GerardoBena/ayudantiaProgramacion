@@ -1,0 +1,23 @@
+bool esTriangular(unsigned long numero, unsigned long *lado){
+    unsigned long aux=0;
+    while(1){
+        aux= (*lado) * (*lado + 1)/2;
+        if(aux==numero) return true;
+        if(aux>numero) return false;
+        (*lado)++;
+    }
+}
+
+
+/*
+bool esTriangular(unsigned long numero, unsigned long *lado){
+    
+    if((*lado) * (*lado + 1)/2 == numero) return true;
+    if((*lado) * (*lado + 1)/2 > numero) return false;
+    
+    (*lado)++;
+    return esTriangular(numero,lado);
+    
+    
+}
+*/
