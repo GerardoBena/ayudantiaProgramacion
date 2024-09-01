@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <math.h>
+
+int main(){
+    int numSoluto;
+    float volumenSolutoAgr, volumenSolucion, molaridad=0, gramos=0, moles=0;
+    
+    scanf("%d %f %f", &numSoluto, &volumenSolutoAgr, &volumenSolucion);
+    
+    switch(numSoluto){
+        case 1:{
+            gramos = 0.789 * volumenSolutoAgr;
+            moles = (gramos / 46.069);  
+            molaridad = moles / (volumenSolucion / 1000);
+            printf("Se agregaron %.0f gramos de Etanol, el cual tiene una concentracion %.4f M en la solucion ",gramos, molaridad);
+            break;
+        }
+        case 2:{
+            gramos = 1.595 * volumenSolutoAgr;
+            moles = (gramos / 153.8);
+            molaridad = moles / (volumenSolucion / 1000);
+            printf("Se agregaron %.0f gramos de Tetracloruro de Carbono, el cual tiene una concentracion %.4f M en la solucion ",gramos, molaridad);
+            break;
+        }
+        case 3:{
+            gramos = 0.785 * volumenSolutoAgr;
+            moles = (gramos / 58.08);
+            molaridad = moles / (volumenSolucion / 1000);
+            printf("Se agregaron %.0f gramos de Acetona, el cual tiene una concentracion %.4f M en la solucion ",gramos, molaridad);
+            break;
+        }
+        case 4:{
+            gramos = 0.877 * volumenSolutoAgr;
+            moles = (gramos / 78.11);
+            molaridad = moles / (volumenSolucion / 1000);
+            printf("Se agregaron %.0f gramos de Benceno, el cual tiene una concentracion %.4f M en la solucion ",gramos, molaridad);
+            break;
+        }
+        case 5:{
+            gramos = 1.83 * volumenSolutoAgr;
+            moles = (gramos / 98.079);
+            molaridad = moles / (volumenSolucion / 1000);
+            printf("Se agregaron %.0f gramos de Acido Sulfurico, el cual tiene una concentracion %.4f M en la solucion ",gramos, molaridad);
+            break;
+        }
+        case 6:{
+            gramos = 3.603 * volumenSolutoAgr;
+            moles = (gramos / 158.881);
+            molaridad = moles / (volumenSolucion / 1000);
+            printf("Se agregaron %.0f gramos de Sulfato de Cobre, el cual tiene una concentracion %.4f M en la solucion ",gramos, molaridad);
+            break;
+        }
+        default:{
+            
+            printf("NUMERO DE SOLUTO INVALIDO");
+            break;
+        }
+        
+    }
+    return 0;
+    
+}
