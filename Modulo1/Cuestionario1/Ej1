@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main(){
+    
+    int hrInicial, minInicial, minPasados,
+        hrActual=0, minActual=0, totalMinActual=0,
+        hrFaltan=0, minFaltan=0, totalMinFaltan=0;
+    
+    scanf("%d %d %d", &hrInicial, &minInicial, &minPasados);
+    
+    totalMinActual = ( (hrInicial*60) + minInicial ) + minPasados;
+    hrActual = ( totalMinActual / 60 ) % 24;
+    minActual = totalMinActual % 60;
+    
+    totalMinFaltan = 1440 - ( (hrActual * 60) + minActual );
+    hrFaltan = totalMinFaltan / 60;
+    minFaltan = totalMinFaltan % 60;
+    
+    printf("Es/Son la(s) %d hora(s) con %d minuto(s)\n", hrActual, minActual);
+    printf("Faltan %d hora(s) y %d minuto(s) para el siguiente dia", hrFaltan
+    , minFaltan);
+    
+    return 0;
+    
+}
