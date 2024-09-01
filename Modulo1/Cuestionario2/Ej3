@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+int main(){
+    int museos, precioEntrada, deudaAcumulada=0, cantVisitas = 0, i=0;
+    
+    while(1){
+        scanf("%d",&museos);
+        
+        if(museos == -1) break;
+        
+        cantVisitas=0;
+        deudaAcumulada=0;
+        for(i=1; i<=museos;i++){
+            scanf("%d",&precioEntrada);
+            deudaAcumulada = deudaAcumulada + precioEntrada;
+            if(deudaAcumulada % 100 == 0) cantVisitas++;
+        }
+        
+        printf("%d\n",cantVisitas);
+        
+    }
+}
