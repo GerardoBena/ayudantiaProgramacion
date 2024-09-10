@@ -1,0 +1,43 @@
+unsigned long sumatoria(unsigned long aent, unsigned long edad){
+    unsigned long suma = 0;
+    for(unsigned long i = aent; i<=edad ; i++){
+        suma+=i;
+    }
+    return suma;
+}
+
+/*unsigned long sumatoria(unsigned long aent, unsigned long edad){
+    if(aent==edad) return aent;
+    return aent + sumatoria(aent+1,edad);
+}*/
+
+unsigned long sumaDigitosPares(unsigned long vpb){
+    unsigned long suma = 0;
+    unsigned int digito = 0;
+    while (vpb>0){
+        digito = vpb%10;
+        if(digito%2==0) suma+=digito;
+        vpb/=10;
+    }
+    return suma;
+}
+
+/*unsigned long sumaDigitosPares(unsigned long vpb){
+    if(vpb<=0) return 0;
+    unsigned int digito = vpb%10;
+    if(digito%2==0) return digito + sumaDigitosPares(vpb/10);
+    return sumaDigitosPares(vpb/10);
+}*/
+
+unsigned long potencia(unsigned long cbat, unsigned long crlm){
+    if(crlm == 0) return 1;
+    return cbat * potencia(cbat,crlm-1);
+}
+
+/*unsigned long potencia(unsigned long cbat, unsigned long crlm){
+    unsigned long potencia = 1;
+    for(unsigned long i=1;i<=crlm;i++){
+        potencia*=cbat;
+    }
+    return potencia;
+}*/
