@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+int validarNumero(int limInf,int limSup){
+    int numero;
+    do{
+        scanf("%d",&numero);
+    }while(numero<limInf || numero>limSup);
+    return numero;
+}
+
+void leerVector(int vector[], int talla){
+    for(int i = 0; i < talla; i++){
+        scanf("%i",&vector[i]);
+    }
+}
+
+void mostrarVector(int vector[], int talla){
+    printf("[");
+    for(int i = 0; i < talla; i++){
+        if(i==0)printf("%i",vector[i]);
+        else printf(", %i",vector[i]);
+    }
+    printf("]");
+    printf("\n");
+}
+
+int numeroDivisible(int vector[],int largo){
+    int divisores=0;
+    for(int i=0;i<largo;i++){
+        divisores=0;
+        for(int j=0;j<largo;j++){
+            if(vector[j]%vector[i]==0) divisores++;
+        }
+        if(divisores==largo) return vector[i];
+    }
+    return 0;
+}
+
+int main(){
+    int largo=0,numeroDivisor=0;
+    largo=validarNumero(1,10000);
+    int vector[largo];
+    leerVector(vector,largo);
+    printf("Lista de números leídos = ");
+    mostrarVector(vector,largo);
+    numeroDivisor=numeroDivisible(vector,largo);
+    if(numeroDivisor==0) printf("Sofía NO existe un número en la lista que los divida a todos.");
+    else printf("Sofía el número %d es divisor de todos los números en la lista.",numeroDivisor);
+}
