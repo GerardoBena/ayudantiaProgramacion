@@ -1,0 +1,84 @@
+#include <stdio.h>
+/*
+double factorial(unsigned long N){
+    double fact=1.0;
+    for(unsigned long i=2;i<=N;i++){
+        fact*=i;
+    }
+    return fact;
+}*/
+
+double factorial(unsigned long N){
+    if(N==0 || N==1) return 1;
+    return N * factorial(N-1);
+}
+
+/*
+double potencia(unsigned long base, unsigned long exponente){
+    double pote=1.0;
+    for(unsigned long i=1;i<=exponente;i++){
+        pote*=base;
+    }
+    return pote;
+}
+*/
+
+double potencia(unsigned long base, unsigned long exponente){
+    if(exponente==0) return 1;
+    return base * potencia(base,exponente-1);
+}
+
+
+/*
+unsigned long sumDig(unsigned long numero){
+    unsigned long suma=0,digito;
+    while(numero>0){
+        digito= numero%10;
+        suma+=digito;
+        numero/=10;
+    }
+    return suma;
+}
+*/
+
+unsigned long sumDig(unsigned long numero){
+    if(numero<=0) return 0;
+    return (numero%10) + sumDig(numero/10);
+}
+
+/*
+double exponencial(unsigned long x){
+    double suma=0.0,termino=0.0;
+    for(unsigned long i=0;i<=100;i++){
+        termino = potencia(x,i)/factorial(i);
+        suma+=termino;
+    }
+    return suma;
+}
+*/
+
+double exponencial(unsigned long x,unsigned long i){
+    if(i==0) return 1;
+    return (potencia(x,i)/factorial(i)) + exponencial(x,i-1);
+}
+
+
+int main(){
+    unsigned long P,T,N,R,ER=0;
+    double ID=0.0;
+    
+    scanf("%ld",&P);
+    scanf("%ld",&T);
+    scanf("%ld",&N);
+    scanf("%ld",&R);
+    
+    ID= P * (1/exponencial(T,100));
+    ER= sumDig(N) * R;
+    
+    printf("INDICE DE DESEMPEÑO = %.6lf\n",ID);
+    printf("EFICIENCIA DE RECOLECCIÓN DE RECURSOS = %ld\n",ER);
+    
+    if(ID<4) printf("JUGADOR PRINCIPIANTE");
+    else if(ID>=4 && ID<10) printf("JUGADOR INTERMEDIO");
+    else printf("JUGADOR AVANZADO");
+}
