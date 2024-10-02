@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void procesar(int n);
+void leerVector(int vector[], int talla);
+void mostrarVector(int vector[], int talla);
+void calcularSaltos(int vector[], int talla);
+
+int main(){
+    int n;
+    scanf("%i",&n);
+    if(n > 0) procesar(n);
+    printf("---SUPER MARIO---");
+    return 0;
+} 
+
+void procesar(int n){
+    int talla;
+    for(int i = 0; i < n; i++){
+        scanf("%i",&talla);
+        int vector[talla];
+        leerVector(vector, talla);
+        mostrarVector(vector, talla); 
+        calcularSaltos(vector, talla);
+    }
+}
+
+void leerVector(int vector[], int talla){
+    for(int i = 0; i < talla; i++){
+        scanf("%i",&vector[i]);
+    }
+}
+
+void mostrarVector(int vector[], int talla){
+    printf("VECTOR LEÍDO =");
+    for(int i = 0; i < talla; i++){
+        printf(" %i",vector[i]);
+    }
+    printf("\n");
+}
+
+void calcularSaltos(int vector[], int talla){
+    int saltosArriba = 0;
+    int saltosAbajo = 0;
+    
+    for(int i = 0; i < talla - 1; i++){
+        if(vector[i] < vector[i+1]) saltosArriba++;
+        else if(vector[i] > vector[i+1]) saltosAbajo++;
+    }
+    printf("SALTOS ARRIBA = %i - SALTOS ABAJO = %i\n\n",saltosArriba,saltosAbajo);
+    
+}
