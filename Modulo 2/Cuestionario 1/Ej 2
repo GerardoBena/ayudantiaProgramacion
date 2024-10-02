@@ -1,0 +1,67 @@
+#include <stdio.h>
+
+void leerVector(int vector[], int talla){
+    for(int i = 0; i < talla; i++){
+        scanf("%i",&vector[i]);
+    }
+}
+
+void mostrarVector(int vector[], int talla){
+    for(int i = 0; i < talla; i++){
+        if(i==0)printf("%i ",vector[i]);
+        else printf(", %i ",vector[i]);
+    }
+    printf("\n");
+}
+
+void ordenarVector(int vector[], int largo){
+    int aux=0;
+    for(int i=1;i<largo;i++){
+        for(int j=0;j<largo-1;j++){
+            if(vector[j] > vector[j+1]){
+                aux=vector[j];
+                vector[j]=vector[j+1];
+                vector[j+1]= aux;
+            }
+        }
+    }
+}
+
+int buscarVector(int vector[], int largo, int buscado){
+    for(int i=0;i<largo;i++){
+        if(buscado==vector[i]) return 1;
+    }
+    return 0;
+}
+
+int piezaFaltante(int vector[],int largo){
+    for(int i=1;i<=largo;i++){
+        if(buscarVector(vector,largo-1,i)==0) return i;
+    }
+    return 0;
+}
+
+void procesarCasos(){
+    int caso=0,piezas,piezaFalt=0;
+    while(1){
+        scanf("%d",&piezas);
+        if(piezas==0) break;
+        int vector[piezas-1];
+        leerVector(vector,piezas-1);
+        caso++;
+        printf("CASO DE PRUEBA #%d\n",caso);
+        printf("Piezas Encontradas = ");
+        mostrarVector(vector,piezas-1);
+        ordenarVector(vector,piezas-1);
+        printf("Piezas Encontradas Ordenadas = ");
+        mostrarVector(vector,piezas-1);
+        piezaFalt=piezaFaltante(vector,piezas);
+        printf("Falta la Pieza No. %d\n",piezaFalt);
+        printf("\n");
+    }
+    printf("--- FIN ---");
+}
+
+int main(){
+    procesarCasos();
+}
