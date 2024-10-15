@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+#define MAX 20
+#define MIN 1
+
+void validar(int *n,int *m,int limInf,int limSup){
+    do{
+        scanf("%d %d",n,m);
+    }while((*n<limInf || *n >limSup) || (*m < limInf || *m >limSup));
+}
+
+void poblarMatriz(int matriz[][MAX],int n,int m){
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            scanf("%d",&matriz[i][j]);
+        }
+    }
+}
+
+void mostrarZigZag(int matriz[][MAX],int n,int m){
+    for(int i=0;i<n;i++){
+        if(i==0 || i%2==0){
+            for(int j=0;j<m;j++){
+                printf("%d ",matriz[i][j]);
+            }
+        }else{
+            for(int j=m-1;j>=0;j--){
+                printf("%d ",matriz[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
+int main(){
+    int n,m;
+    int matriz[MAX][MAX];
+    
+    validar(&n,&m,MIN,MAX);
+    poblarMatriz(matriz,n,m);
+    printf("MATRIZ ZIG ZAG FILAS\n");
+    mostrarZigZag(matriz,n,m);
+}
