@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+void poblarMatriz(int matriz[][50], int talla){
+    for(int i = 0; i < talla; i++){
+        for(int j = 0; j < talla; j++){
+            scanf("%i",&matriz[i][j]);
+        }
+    }
+}
+
+bool esTriangularSuperiorIzquierda(int matriz[][50], int talla){
+    for(int i = 0; i < talla; i++){
+        for(int j = 0; j < talla - 1 - i; j++){
+            if(matriz[i][j] != 0) return false;
+        }
+    }
+    return true;
+}
+
+bool esTriangularInferiorIzquierda(int matriz[][50], int talla){
+    for(int i = 0; i < talla; i++){
+        for(int j = 0; j < i; j++){
+            if(matriz[i][j] != 0) return false;
+        }
+    }
+    return true;
+}
+
+bool esTriangularInferiorDerecha(int matriz[][50], int talla){
+    for(int i = 0; i < talla; i++){
+        for(int j = talla - i; j < talla; j++){
+            if(matriz[i][j] != 0) return false;
+        }
+    }
+    return true;
+}
+
+bool esTriangularSuperiorDerecha(int matriz[][50], int talla){
+    for(int i = 0; i < talla; i++){
+        for(int j = i + 1; j < talla; j++){
+            if(matriz[i][j] != 0) return false;
+        }
+    }
+    return true;
+}
+
+void comprobarMatriz(int matriz[][50], int talla){
+    if(esTriangularSuperiorDerecha(matriz, talla) ||
+    esTriangularInferiorDerecha(matriz, talla) ||
+    esTriangularSuperiorIzquierda(matriz, talla) ||
+    esTriangularInferiorIzquierda(matriz, talla) ){
+        printf("SI\n");
+    }
+    else{
+        printf("NO\n");
+    }
+}
+
+int main(){
+    int talla, limSup = 50, limInf = 1;
+    int matriz[limSup][limSup];
+    scanf("%i",&talla);
+    while(talla >= limInf && talla <= limSup){
+        poblarMatriz(matriz, talla);
+        comprobarMatriz(matriz, talla);
+        scanf("%i",&talla);
+    }
+}
