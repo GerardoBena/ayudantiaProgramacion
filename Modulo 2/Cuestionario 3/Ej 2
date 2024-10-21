@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 10000
+
+typedef struct{
+    size_t prioridad;
+    size_t duracion;
+} tarea;
+
+void leerTareas(tarea tareas[],size_t *largo){
+    size_t duracionT , prioridadT;
+    for(size_t i=0;i<MAX;i++){
+        scanf("%zu",&prioridadT);
+        if(prioridadT==0) break;
+        scanf("%zu",&duracionT);
+        tareas[*largo].prioridad=prioridadT;
+        tareas[*largo].duracion=duracionT;
+        (*largo)++;
+    }
+}
+
+int compararTarea(const void *a,const void *b){
+    tarea *ptrA= (tarea *)a;
+    tarea *ptrB= (tarea *)b;
+    
+    if(ptrA->prioridad < ptrB->prioridad) return 1;
+    if(ptrA->prioridad == ptrB->prioridad){
+        if(ptrA->duracion > ptrB->duracion) return 1;
+    }
+    return 0;
+}
+
+void mostrarTareasSinOrdenar(tarea tareas[],size_t largo){
+    printf("[ ");
+    for(size_t i=0;i<largo;i++){
+        printf("(%zu , %zu) ",tareas[i].prioridad,tareas[i].duracion);
+    }
+    printf("]\n");
+}
+
+void mostrarTareasOrdenadas(tarea tareas[],size_t largo){
+    for(size_t i=0;i<largo;i++){
+        printf("%zu. Tarea con Prioridad %zu - Duración %zu horas.\n",i+1,tareas[i].prioridad,tareas[i].duracion);
+    }
+}
+
+
+void procesarDatos(){
+    size_t casos,largoTareas=0;
+    scanf("%zu",&casos);
+    for(size_t i=1;i<=casos;i++){
+        largoTareas=0;
+        tarea tareas[MAX];
+        printf("CASO DE PRUEBA #%zu\n",i);
+        printf("\n");
+        leerTareas(tareas,&largoTareas);
+        if(largoTareas==0){
+            printf("Felipe no ingresaste datos de tareas!\n");
+            printf("\n");
+            continue;
+        }
+        printf("Datos Tareas En Orden de Ingreso = ");
+        mostrarTareasSinOrdenar(tareas,largoTareas);
+        printf("\n");
+        qsort(tareas,largoTareas,sizeof(tarea),compararTarea);
+        printf("Felipe debes realizar las tareas en el siguiente orden :\n");
+        mostrarTareasOrdenadas(tareas,largoTareas);
+        printf("\n");
+    }
+    if(casos==0) printf("Felipe no se ingresaron Casos de Prueba!");
+    else printf("----- FIN CASOS DE PRUEBA -----");
+}
+
+int main(){
+    procesarDatos();
+    return 0;
+}
