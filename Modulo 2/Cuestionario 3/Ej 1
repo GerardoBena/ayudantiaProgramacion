@@ -1,0 +1,136 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct{
+    size_t rut;
+    size_t telefono;
+} cliente;
+
+typedef struct{
+    size_t numeroPedido;
+    size_t rutCliente;
+    size_t montoPedido;
+    size_t numeroFactura;
+} pedido;
+
+typedef struct {
+    size_t rutCliente;
+    double montoTotal;
+    size_t telefono;
+} totalCliente;
+
+void leerClientes(cliente vector[],size_t largo){
+    for(size_t i=0;i<largo;i++){
+        scanf("%zu %zu",&vector[i].rut,&vector[i].telefono);
+    }
+}
+
+void leerPedidos(pedido vector[],size_t largo){
+    for(size_t i=0;i<largo;i++){
+        scanf("%zu %zu %zu %zu",&vector[i].numeroPedido,&vector[i].rutCliente,
+                                &vector[i].montoPedido,&vector[i].numeroFactura);
+    }
+}
+
+int compararPedidos(const void *a,const void *b){
+    pedido *ptrA = (pedido *)a;
+    pedido *ptrB = (pedido *)b;
+    
+    if(ptrA->rutCliente > ptrB->rutCliente) return 1;
+    if(ptrA->rutCliente == ptrB->rutCliente){
+        if(ptrA->numeroPedido > ptrB->numeroPedido) return 1;
+    }
+    return 0;
+}
+
+int compararTotalCliente(const void *a, const void *b){
+    totalCliente *ptrA = (totalCliente *)a;
+    totalCliente *ptrB = (totalCliente *)b;
+    
+    if(ptrA->montoTotal < ptrB->montoTotal) return 1;
+    if(ptrA->montoTotal == ptrB->montoTotal){
+        if(ptrA->rutCliente > ptrB->rutCliente) return 1;
+    }
+    return 0;
+}
+
+size_t calcularTotalGastado(pedido pedidos[],size_t largoPedidos, size_t rut){
+    size_t montoTotal=0;
+    for(size_t i=0;i<largoPedidos;i++){
+        if(pedidos[i].rutCliente == rut) montoTotal+=pedidos[i].montoPedido;
+    }
+    return montoTotal;
+}
+
+void agregarComprasClientes(totalCliente comprasClientes[],size_t *largoCompras,
+                            cliente clientes[],size_t totalClientes,
+                            pedido pedidos[], size_t largoPedidos)
+{
+    size_t gastado=0;
+    for(size_t i=0;i<totalClientes;i++){
+        gastado = calcularTotalGastado(pedidos,largoPedidos,clientes[i].rut);
+        if(gastado!=0){
+            comprasClientes[*largoCompras].rutCliente=clientes[i].rut;
+            comprasClientes[*largoCompras].montoTotal=gastado;
+            comprasClientes[*largoCompras].telefono= clientes[i].telefono;
+            (*largoCompras)++;
+        }
+    }
+}
+
+void mostrarPedidos(pedido pedidos[], size_t largo){
+    printf(" ---------------------------------------------------------------------\n");
+    printf("|         RUT          |       No. PEDIDO     |     MONTO PEDIDO      |\n");
+    printf(" ---------------------------------------------------------------------\n");
+    for(size_t i=0;i<largo;i++){
+        printf("| %20zu | %20zu | %20zu  |\n",pedidos[i].rutCliente,pedidos[i].numeroPedido,pedidos[i].montoPedido);
+    }
+    printf(" ---------------------------------------------------------------------\n");
+    printf("\n");
+}
+
+void mostrarTotalCliente(totalCliente comprasClientes[], size_t largo){
+    printf(" --------------------------------------------------------------------\n");
+    printf("|         RUT          |  MONTO TOTAL COMPRAS |         TELEFONO     |\n");
+    printf(" --------------------------------------------------------------------\n");
+    for(size_t i=0;i<largo;i++){
+        printf("| %20zu | %20.2lf | %20zu |\n",comprasClientes[i].rutCliente,comprasClientes[i].montoTotal,comprasClientes[i].telefono);
+    }
+    printf(" --------------------------------------------------------------------");
+}
+
+
+void procesarDatos(){
+    size_t largoClientes,largoPedidos,compras=0;
+    scanf("%zu",&largoClientes);
+    cliente clientes[largoClientes];
+    
+    leerClientes(clientes,largoClientes);
+    
+    scanf("%zu",&largoPedidos);
+    pedido pedidos[largoPedidos];
+    totalCliente comprasClientes[largoPedidos];
+    
+    leerPedidos(pedidos,largoPedidos);
+    
+    qsort(pedidos,largoPedidos,sizeof(pedido),compararPedidos);
+    agregarComprasClientes(comprasClientes,&compras,clientes,largoClientes,
+                           pedidos,largoPedidos);
+                           
+    qsort(comprasClientes,compras,sizeof(totalCliente),compararTotalCliente);
+    
+    printf("LISTA CLIENTES QUE REALIZARON PEDIDOS EN EL PERÍODO\n");
+    printf("\n");
+    mostrarPedidos(pedidos,largoPedidos);
+    
+    printf("RANKING CLIENTES POR MONTO TOTAL DE COMPRAS\n");
+    printf("\n");
+    mostrarTotalCliente(comprasClientes,compras);
+    
+}
+
+int main(){
+    procesarDatos();
+    return 0;
+}
+
