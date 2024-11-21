@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+
+typedef struct {
+    char *dominio;
+    int frecuencia;
+} DominioInfo;
+
+char *extraerDominio(const char *correo) {
+    const char *arroba = strchr(correo, '@');
+    if (arroba != NULL) {
+        char *dominio = (char *)malloc((strlen(arroba) + 1) * sizeof(char));  
+        if(dominio==NULL)exit(EXIT_FAILURE);
+        strcpy(dominio, arroba + 1);  
+        return dominio;
+    }
+    return NULL;  
+}
+
+void convertirMinusculas(char *cadena) {
+    for (int i = 0; i<strlen(cadena); i++) {
+        cadena[i] = tolower(cadena[i]);
+    }
+}
+
+void agregarDominio(DominioInfo **dominios, int *numDominios, const char *dominio) {
+    for (int i = 0; i < *numDominios; i++) {
+        if (strcmp((*dominios)[i].dominio, dominio) == 0) {
+            (*dominios)[i].frecuencia++;
+            return;
+        }
+    }
+    (*numDominios)++;
+    *dominios = (DominioInfo *)realloc(*dominios, *numDominios * sizeof(DominioInfo));
+    if (*dominios == NULL) exit(EXIT_FAILURE);
+    (*dominios)[*numDominios-1].dominio = (char *)malloc((strlen(dominio) + 1) *sizeof(char));  
+    if ((*dominios)[*numDominios-1].dominio != NULL) {
+        strcpy((*dominios)[*numDominios-1].dominio, dominio);  
+        (*dominios)[*numDominios-1].frecuencia = 1;
+    }
+}
+
+int comparar(const void *a, const void *b) {
+    DominioInfo *dom1 = (DominioInfo *)a;
+    DominioInfo *dom2 = (DominioInfo *)b;
+    if (dom1->frecuencia != dom2->frecuencia) {
+        return dom2->frecuencia - dom1->frecuencia;
+    }
+    return strcmp(dom1->dominio, dom2->dominio);
+}
+
+void imprimirDominios(DominioInfo *dominios, int numDominios) {
+    printf("DOMINIOS DIFERENTES ENCONTRADOS\n");
+    printf("===============================\n");
+    for (int i = 0; i < numDominios; i++) {
+        printf("%s %d\n", dominios[i].dominio, dominios[i].frecuencia);
+    }
+}
+
+void liberarDominios(DominioInfo *dominios, int numDominios) {
+    for (int i = 0; i < numDominios; i++) {
+        free(dominios[i].dominio);  
+    }
+    free(dominios);
+}
+
+void procesarEntrada(DominioInfo **dominios, int *numDominios) {
+    char *correo = (char *)malloc(324 * sizeof(char));
+
+    if (!correo) exit(EXIT_FAILURE);
+
+    while (1) {
+        scanf(" %s", correo);
+        if (strcmp(correo, "FIN") == 0) return;
+        char *dominio = extraerDominio(correo);
+        if (dominio != NULL) {
+            convertirMinusculas(dominio);
+            agregarDominio(dominios, numDominios, dominio);
+            free(dominio);
+        }
+    }
+}
+
+int main() {
+    DominioInfo *dominios = NULL;
+    int numDominios = 0;
+
+    procesarEntrada(&dominios, &numDominios);
+
+    qsort(dominios, numDominios, sizeof(DominioInfo), comparar);
+
+    imprimirDominios(dominios, numDominios);
+    liberarDominios(dominios, numDominios);  
+
+    return 0;
+}
