@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
+#define TALLA 1001
+
+
+char *eliminarEspacios(char *cadena){
+    int j=0;
+    char *sinEspacios = (char *) malloc(strlen(cadena) + 1 * sizeof(char));
+    for(int i=0;i<strlen(cadena);i++){
+        if(isalpha(cadena[i])){
+            sinEspacios[j++]= tolower(cadena[i]);
+        }
+    }
+    sinEspacios[j]='\0';
+    return sinEspacios;
+}
+
+int compararCaracteres(const void *a,const void *b){
+    char charA = *(char *) a;
+    char charB = *(char *) b;
+    
+    charA = tolower(charA);
+    charB = tolower(charB);
+    
+    if(charA>charB) return 1;
+    else return 0;
+}
+
+int comprobarAnagrama(char *cadena1,char *cadena2){
+    char *sinEspacios1 = eliminarEspacios(cadena1);
+    char *sinEspacios2 = eliminarEspacios(cadena2);
+    
+    if(strlen(sinEspacios1) != strlen(sinEspacios2)){
+        free(sinEspacios1);
+        free(sinEspacios2);
+        return 0;
+    }
+    
+    qsort(sinEspacios1,strlen(sinEspacios1),sizeof(char),compararCaracteres);
+    qsort(sinEspacios2,strlen(sinEspacios2),sizeof(char),compararCaracteres);
+    
+    if(strcmp(sinEspacios1,sinEspacios2)==0){
+        free(sinEspacios1);
+        free(sinEspacios2);
+        return 1;
+    }else{
+        free(sinEspacios1);
+        free(sinEspacios2);
+        return 0;
+    } 
+}
+
+void procesarCasos(){
+    int casos;
+    char *buffer,*cadena1,*cadena2; 
+    scanf("%d",&casos);
+    for(int i=1;i<=casos;i++){
+        buffer=(char *)malloc(TALLA * sizeof(char));
+        if(buffer==NULL) exit(EXIT_FAILURE);
+        scanf(" %[^\n]s",buffer);
+        cadena1=(char *)malloc(TALLA * sizeof(char));
+        if(cadena1==NULL) exit(EXIT_FAILURE);
+        strcpy(cadena1,buffer);
+        scanf(" %[^\n]s",buffer);
+        cadena2=(char *)malloc(TALLA * sizeof(char));
+        if(cadena2==NULL) exit(EXIT_FAILURE);
+        strcpy(cadena2,buffer);
+        if(comprobarAnagrama(cadena1,cadena2)) printf("SI\n");
+        else printf("NO \n");
+    }
+} 
+
+int main(){
+    procesarCasos();
+}
